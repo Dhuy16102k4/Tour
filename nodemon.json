@@ -1,0 +1,10 @@
+{
+  "watch": ["services", "shared"],
+  "ext": "js,json",
+  "ignore": ["node_modules", "logs", "*.log", ".git"],
+  "exec": "node services/api-gateway/src/server.js",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
+

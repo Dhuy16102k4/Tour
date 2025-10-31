@@ -1,0 +1,177 @@
+version: '3.8'
+
+services:
+  # MongoDB
+  mongodb:
+    image: mongo:7
+    container_name: tour_booking_mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: tour_booking
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - tour_booking_network
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: tour_booking_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - tour_booking_network
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+      dockerfile: Dockerfile
+    container_name: tour_booking_gateway
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      USER_SERVICE_URL: http://user-service:3001
+      TOUR_SERVICE_URL: http://tour-service:3002
+      BOOKING_SERVICE_URL: http://booking-service:3003
+      PAYMENT_SERVICE_URL: http://payment-service:3004
+      NOTIFICATION_SERVICE_URL: http://notification-service:3005
+    depends_on:
+      - user-service
+      - tour-service
+      - booking-service
+      - payment-service
+      - notification-service
+    networks:
+      - tour_booking_network
+
+  # User Service
+  user-service:
+    build:
+      context: ./services/user-service
+      dockerfile: Dockerfile
+    container_name: tour_booking_user
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      MONGODB_URI: mongodb://mongodb:27017/tour_booking_users
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      JWT_EXPIRES_IN: 7d
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - tour_booking_network
+
+  # Tour Service
+  tour-service:
+    build:
+      context: ./services/tour-service
+      dockerfile: Dockerfile
+    container_name: tour_booking_tour
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    environment:
+      NODE_ENV: production
+      PORT: 3002
+      MONGODB_URI: mongodb://mongodb:27017/tour_booking_tours
+    depends_on:
+      - mongodb
+    networks:
+      - tour_booking_network
+
+  # Booking Service
+  booking-service:
+    build:
+      context: ./services/booking-service
+      dockerfile: Dockerfile
+    container_name: tour_booking_booking
+    restart: unless-stopped
+    ports:
+      - "3003:3003"
+    environment:
+      NODE_ENV: production
+      PORT: 3003
+      MONGODB_URI: mongodb://mongodb:27017/tour_booking_bookings
+      TOUR_SERVICE_URL: http://tour-service:3002
+      PAYMENT_SERVICE_URL: http://payment-service:3004
+      NOTIFICATION_SERVICE_URL: http://notification-service:3005
+    depends_on:
+      - mongodb
+      - tour-service
+      - payment-service
+      - notification-service
+    networks:
+      - tour_booking_network
+
+  # Payment Service
+  payment-service:
+    build:
+      context: ./services/payment-service
+      dockerfile: Dockerfile
+    container_name: tour_booking_payment
+    restart: unless-stopped
+    ports:
+      - "3004:3004"
+    environment:
+      NODE_ENV: production
+      PORT: 3004
+      MONGODB_URI: mongodb://mongodb:27017/tour_booking_payments
+      STRIPE_SECRET_KEY: your_stripe_secret_key
+      BOOKING_SERVICE_URL: http://booking-service:3003
+      NOTIFICATION_SERVICE_URL: http://notification-service:3005
+    depends_on:
+      - mongodb
+      - booking-service
+      - notification-service
+    networks:
+      - tour_booking_network
+
+  # Notification Service
+  notification-service:
+    build:
+      context: ./services/notification-service
+      dockerfile: Dockerfile
+    container_name: tour_booking_notification
+    restart: unless-stopped
+    ports:
+      - "3005:3005"
+    environment:
+      NODE_ENV: production
+      PORT: 3005
+      MONGODB_URI: mongodb://mongodb:27017/tour_booking_notifications
+      USER_SERVICE_URL: http://user-service:3001
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: 587
+      SMTP_USER: your_email@gmail.com
+      SMTP_PASS: your_email_password
+      SMTP_FROM: noreply@tourbooking.com
+    depends_on:
+      - mongodb
+      - user-service
+    networks:
+      - tour_booking_network
+
+networks:
+  tour_booking_network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+  redis_data:
+
