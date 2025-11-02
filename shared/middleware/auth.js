@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken') 
 const AppError = require('../errors/AppError') 
+const ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_SECRET || 'access-secret-key'
+
 
 const verifyToken = (req, res, next) => {
   try {
@@ -14,7 +16,7 @@ const verifyToken = (req, res, next) => {
       return next(new AppError('You are not logged in! Please log in to get access.', 401))
     }
     // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') 
+    const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET);
     req.user = decoded 
     next() 
   } catch (error) {

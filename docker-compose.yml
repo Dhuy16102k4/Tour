@@ -1,5 +1,4 @@
-version: '3.8'
-
+# 'version' đã bị xóa vì không còn cần thiết
 services:
   # MongoDB
   mongodb:
@@ -32,8 +31,8 @@ services:
   # API Gateway
   api-gateway:
     build:
-      context: ./services/api-gateway
-      dockerfile: Dockerfile
+      context: .  # <-- THAY ĐỔI
+      dockerfile: ./services/api-gateway/Dockerfile # <-- THAY ĐỔI
     container_name: tour_booking_gateway
     restart: unless-stopped
     ports:
@@ -58,8 +57,8 @@ services:
   # User Service
   user-service:
     build:
-      context: ./services/user-service
-      dockerfile: Dockerfile
+      context: .  # <-- THAY ĐỔI
+      dockerfile: ./services/user-service/Dockerfile # <-- THAY ĐỔI
     container_name: tour_booking_user
     restart: unless-stopped
     ports:
@@ -80,8 +79,8 @@ services:
   # Tour Service
   tour-service:
     build:
-      context: ./services/tour-service
-      dockerfile: Dockerfile
+      context: .  # <-- THAY ĐỔI
+      dockerfile: ./services/tour-service/Dockerfile # <-- THAY ĐỔI
     container_name: tour_booking_tour
     restart: unless-stopped
     ports:
@@ -98,8 +97,8 @@ services:
   # Booking Service
   booking-service:
     build:
-      context: ./services/booking-service
-      dockerfile: Dockerfile
+      context: .  # <-- THAY ĐỔI
+      dockerfile: ./services/booking-service/Dockerfile # <-- THAY ĐỔI
     container_name: tour_booking_booking
     restart: unless-stopped
     ports:
@@ -114,7 +113,7 @@ services:
     depends_on:
       - mongodb
       - tour-service
-      - payment-service
+      # - payment-service # <-- ĐÃ XÓA để phá vỡ vòng lặp
       - notification-service
     networks:
       - tour_booking_network
@@ -122,8 +121,8 @@ services:
   # Payment Service
   payment-service:
     build:
-      context: ./services/payment-service
-      dockerfile: Dockerfile
+      context: .  # <-- THAY ĐỔI
+      dockerfile: ./services/payment-service/Dockerfile # <-- THAY ĐỔI
     container_name: tour_booking_payment
     restart: unless-stopped
     ports:
@@ -137,7 +136,7 @@ services:
       NOTIFICATION_SERVICE_URL: http://notification-service:3005
     depends_on:
       - mongodb
-      - booking-service
+      # - booking-service # <-- ĐÃ XÓA để phá vỡ vòng lặp
       - notification-service
     networks:
       - tour_booking_network
@@ -145,8 +144,8 @@ services:
   # Notification Service
   notification-service:
     build:
-      context: ./services/notification-service
-      dockerfile: Dockerfile
+      context: .  # <-- THAY ĐỔI
+      dockerfile: ./services/notification-service/Dockerfile # <-- THAY ĐỔI
     container_name: tour_booking_notification
     restart: unless-stopped
     ports:
@@ -174,4 +173,3 @@ networks:
 volumes:
   mongodb_data:
   redis_data:
-

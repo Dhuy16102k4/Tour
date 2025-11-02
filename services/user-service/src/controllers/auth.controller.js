@@ -16,8 +16,9 @@ class AuthController {
   generateAccessToken(user) {
     return jwt.sign(
       { userId: user._id, role: user.role },
+      ACCESS_TOKEN_SECRET,
       { expiresIn: ACCESS_TOKEN_EXPIRES_IN }
-    )
+    ) 
   }
 
   // Tạo Refresh Token (dài hạn)
@@ -64,10 +65,6 @@ class AuthController {
 
       if (!name || !email || !password) {
         return errorResponse(res, 400, 'Please provide name, email, and password')
-      }
-
-      if (!phone || !address) {
-        return errorResponse(res, 400, 'Please provide phone and address')
       }
 
       // Check user
