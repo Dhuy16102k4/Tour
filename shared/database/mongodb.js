@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose') 
 
 class MongoDB {
   constructor() {
-    this.connection = null;
+    this.connection = null 
   }
 
   async connect(uri, options = {}) {
@@ -12,31 +12,31 @@ class MongoDB {
         serverSelectionTimeoutMS: 5000,
         socketTimeoutMS: 45000,
         ...options
-      });
-      console.log(' MongoDB connected successfully');
-      return this.connection;
+      }) 
+      console.log(' MongoDB connected successfully') 
+      return this.connection 
     } catch (error) {
-      console.error(' MongoDB connection error:', error);
-      throw error;
+      console.error(' MongoDB connection error:', error) 
+      throw error 
     }
   }
 
   async disconnect() {
     try {
       if (this.connection) {
-        await mongoose.disconnect();
-        console.log(' MongoDB disconnected');
+        await mongoose.disconnect() 
+        console.log(' MongoDB disconnected') 
       }
     } catch (error) {
-      console.error(' MongoDB disconnect error:', error);
-      throw error;
+      console.error(' MongoDB disconnect error:', error) 
+      throw error 
     }
   }
 
   getConnection() {
-    return this.connection;
+    return this.connection 
   }
 }
 
-module.exports = new MongoDB();
+module.exports = new MongoDB() 
 

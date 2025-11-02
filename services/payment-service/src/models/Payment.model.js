@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose') 
 
 const paymentSchema = new mongoose.Schema({
   bookingId: {
@@ -48,11 +48,11 @@ const paymentSchema = new mongoose.Schema({
   }
 }, {
   timestamps: true
-});
+}) 
 
-paymentSchema.index({ bookingId: 1 });
-paymentSchema.index({ userId: 1, createdAt: -1 });
-paymentSchema.index({ status: 1 });
+paymentSchema.index({ bookingId: 1 }) 
+paymentSchema.index({ userId: 1, createdAt: -1 }) 
+paymentSchema.index({ status: 1 }) 
 
-module.exports = mongoose.model('Payment', paymentSchema);
+module.exports = mongoose.model('Payment', paymentSchema) 
 

@@ -81,17 +81,17 @@ class UserController {
       return errorResponse(res, 500, 'Error deleting account')
     }
   }
-  async getUserHistory(req, res, next) {
-    try {
-      const userId = req.user.userId
-      const bookings = await axios.get(`${BOOKING_SERVICE_URL}/api/bookings/user/${userId}`)
-      return successResponse(res, 200, { bookings }, 'User history retrieved successfully')
-    } catch (error) {
-      console.error('Get user history error:', error)
-      return errorResponse(res, 500, 'Error retrieving user history')
-    }
+  // async getUserHistory(req, res, next) {
+  //   try {
+  //     const userId = req.user.userId
+  //     const bookings = await axios.get(`${BOOKING_SERVICE_URL}/api/bookings/user/${userId}`)
+  //     return successResponse(res, 200, { bookings }, 'User history retrieved successfully')
+  //   } catch (error) {
+  //     console.error('Get user history error:', error)
+  //     return errorResponse(res, 500, 'Error retrieving user history')
+  //   }
     
-  }
+  // }
 }
 
 module.exports = new UserController()

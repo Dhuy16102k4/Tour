@@ -18,5 +18,5 @@ module.exports = {
   successResponse: require('./utils/response').successResponse,
   errorResponse: require('./utils/response').errorResponse,
   logger: require('./utils/logger')
-};
+} 
 

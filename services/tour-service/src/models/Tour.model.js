@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose') 
 
 const tourSchema = new mongoose.Schema({
   name: {
@@ -84,11 +84,11 @@ const tourSchema = new mongoose.Schema({
   }
 }, {
   timestamps: true
-});
+}) 
 
-tourSchema.index({ name: 'text', description: 'text' });
-tourSchema.index({ category: 1 });
-tourSchema.index({ price: 1 });
+tourSchema.index({ name: 'text', description: 'text' }) 
+tourSchema.index({ category: 1 }) 
+tourSchema.index({ price: 1 }) 
 
-module.exports = mongoose.model('Tour', tourSchema);
+module.exports = mongoose.model('Tour', tourSchema) 
 

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose') 
 
 const bookingSchema = new mongoose.Schema({
   tourId: {
@@ -56,10 +56,10 @@ const bookingSchema = new mongoose.Schema({
   }
 }, {
   timestamps: true
-});
+}) 
 
-bookingSchema.index({ userId: 1, createdAt: -1 });
-bookingSchema.index({ status: 1 });
+bookingSchema.index({ userId: 1, createdAt: -1 }) 
+bookingSchema.index({ status: 1 }) 
 
-module.exports = mongoose.model('Booking', bookingSchema);
+module.exports = mongoose.model('Booking', bookingSchema) 
 

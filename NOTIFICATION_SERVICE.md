@@ -176,9 +176,9 @@ try {
     userId,
     type: 'booking_confirmation',
     message: 'Your booking has been created successfully'
-  });
+  }) 
 } catch (error) {
-  console.error('Notification sending error:', error);
+  console.error('Notification sending error:', error) 
 }
 ```
 
@@ -193,9 +193,9 @@ try {
     userId: payment.userId,
     type: 'payment_confirmation',
     message: 'Your payment has been processed successfully'
-  });
+  }) 
 } catch (error) {
-  console.error('Notification error:', error);
+  console.error('Notification error:', error) 
 }
 ```
 
@@ -213,7 +213,7 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS
   }
-});
+}) 
 ```
 
 ### Setup Email
@@ -290,7 +290,7 @@ POST http://localhost:3005/api/notifications
 ### 1. SMS Notifications
 ```javascript
 // Có thể thêm Twilio
-const twilio = require('twilio');
+const twilio = require('twilio') 
 // Gửi SMS cho những thông báo quan trọng
 ```
 
@@ -310,7 +310,7 @@ const twilio = require('twilio');
 ### 4. Template System
 ```javascript
 // Email templates đẹp hơn với Handlebars
-const handlebars = require('handlebars');
+const handlebars = require('handlebars') 
 // Templates HTML chuyên nghiệp
 ```
 

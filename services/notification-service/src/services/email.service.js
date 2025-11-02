@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer') 
 
 // Create reusable transporter
 const transporter = nodemailer.createTransport({
@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS
   }
-});
+}) 
 
 const sendEmail = async (options) => {
   try {
@@ -19,16 +19,16 @@ const sendEmail = async (options) => {
       subject: options.subject,
       text: options.text,
       html: options.html
-    };
+    } 
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.messageId);
-    return info;
+    const info = await transporter.sendMail(mailOptions) 
+    console.log('Email sent:', info.messageId) 
+    return info 
   } catch (error) {
-    console.error('Email sending error:', error);
-    throw error;
+    console.error('Email sending error:', error) 
+    throw error 
   }
-};
+} 
 
-module.exports = { sendEmail };
+module.exports = { sendEmail } 
 
