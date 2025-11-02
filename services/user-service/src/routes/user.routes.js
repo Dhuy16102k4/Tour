@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user.controller')
 
-const { verifyToken, restrictTo } = require('../../../shared/middleware/auth')
+const { verifyToken, restrictTo } = require('../../../../shared/middleware/auth')
 
 router.use(verifyToken)
 
