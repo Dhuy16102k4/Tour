@@ -14,19 +14,19 @@ class RedisClient {
       });
 
       this.client.on('error', (err) => {
-        console.error('❌ Redis Client Error:', err);
+        console.error(' Redis Client Error:', err);
         this.connected = false;
       });
 
       this.client.on('connect', () => {
-        console.log('✅ Redis connected successfully');
+        console.log('Redis connected successfully');
         this.connected = true;
       });
 
       await this.client.connect();
       return this.client;
     } catch (error) {
-      console.error('❌ Redis connection error:', error);
+      console.error(' Redis connection error:', error);
       throw error;
     }
   }
@@ -35,11 +35,11 @@ class RedisClient {
     try {
       if (this.client && this.connected) {
         await this.client.quit();
-        console.log('✅ Redis disconnected');
+        console.log(' Redis disconnected');
         this.connected = false;
       }
     } catch (error) {
-      console.error('❌ Redis disconnect error:', error);
+      console.error('Redis disconnect error:', error);
       throw error;
     }
   }
@@ -70,6 +70,7 @@ class RedisClient {
     return await this.client.del(key);
   }
 }
+
 
 module.exports = new RedisClient();
 

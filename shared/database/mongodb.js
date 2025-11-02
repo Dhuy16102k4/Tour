@@ -13,10 +13,10 @@ class MongoDB {
         socketTimeoutMS: 45000,
         ...options
       });
-      console.log('✅ MongoDB connected successfully');
+      console.log(' MongoDB connected successfully');
       return this.connection;
     } catch (error) {
-      console.error('❌ MongoDB connection error:', error);
+      console.error(' MongoDB connection error:', error);
       throw error;
     }
   }
@@ -25,10 +25,10 @@ class MongoDB {
     try {
       if (this.connection) {
         await mongoose.disconnect();
-        console.log('✅ MongoDB disconnected');
+        console.log(' MongoDB disconnected');
       }
     } catch (error) {
-      console.error('❌ MongoDB disconnect error:', error);
+      console.error(' MongoDB disconnect error:', error);
       throw error;
     }
   }

@@ -1,16 +1,21 @@
-const express = require('express');
-const router = express.Router();
-const userController = require('../controllers/user.controller');
-// const { verifyToken } = require('../../shared/middleware/auth');
+const express = require('express')
+const router = express.Router()
+const userController = require('../controllers/user.controller')
 
-// Public routes
-router.get('/:id', userController.getUserById);
+const { verifyToken, restrictTo } = require('../../../shared/middleware/auth')
 
-// Protected routes - uncomment when auth is ready
-// router.use(verifyToken);
-// router.get('/me', userController.getCurrentUser);
-// router.put('/me', userController.updateProfile);
-// router.delete('/me', userController.deleteAccount);
+router.use(verifyToken)
 
-module.exports = router;
+// Các route cho người dùng tự quản lý profile
+router.get('/me', userController.getCurrentUser)
+router.put('/me/update', userController.updateProfile)
+router.delete('/me/delete', userController.deleteAccount)
 
+// --- Admin Routes ---
+router.get(
+  '/:id', 
+  restrictTo('admin', 'tour-guide'),
+  userController.getUserById
+)
+
+module.exports = router
