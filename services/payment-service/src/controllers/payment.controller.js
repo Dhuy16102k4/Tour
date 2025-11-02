@@ -1,5 +1,5 @@
 const Payment = require('../models/Payment.model') 
-const { successResponse, errorResponse } = require('../../../shared/utils/response') 
+const { successResponse, errorResponse } = require('../../../../shared/utils/response') 
 const axios = require('axios') 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY) 
 

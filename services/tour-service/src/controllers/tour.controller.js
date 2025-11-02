@@ -1,5 +1,5 @@
 const Tour = require('../models/Tour.model') 
-const { successResponse, errorResponse } = require('../../../shared/utils/response') 
+const { successResponse, errorResponse } = require('../../../../shared/utils/response') 
 
 exports.getAllTours = async (req, res, next) => {
   try {

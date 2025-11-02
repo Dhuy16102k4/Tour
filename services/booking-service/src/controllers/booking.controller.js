@@ -1,5 +1,5 @@
 const Booking = require('../models/Booking.model') 
-const { successResponse, errorResponse } = require('../../../shared/utils/response') 
+const { successResponse, errorResponse } = require('../../../../shared/utils/response') 
 const axios = require('axios') 
 
 const TOUR_SERVICE_URL = process.env.TOUR_SERVICE_URL || 'http://localhost:3002' 

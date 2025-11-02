@@ -1,6 +1,7 @@
 const User = require('../models/User.model')
-const { successResponse, errorResponse } = require('../../../shared/utils/response')
-const redisClient = require('../../../shared/database/redisClient') // <-- Import Redis
+const { successResponse, errorResponse } = require('../../../../shared/utils/response')
+const redisClient = require('../../../../shared/database/redis') 
+
 
 class UserController {
 

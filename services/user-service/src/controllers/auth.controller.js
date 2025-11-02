@@ -1,8 +1,8 @@
 const User = require('../models/User.model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { successResponse, errorResponse } = require('../../../shared/utils/response')
-const redisClient = require('../../../shared/database/redisClient') 
+const { successResponse, errorResponse } = require('../../../../shared/utils/response')
+const redisClient = require('../../../../shared/database/redis') 
 
 const ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_SECRET || 'access-secret-key'
 const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || 'refresh-secret-key'

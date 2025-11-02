@@ -1,5 +1,5 @@
 const Category = require('../models/Category.model') 
-const { successResponse, errorResponse } = require('../../../shared/utils/response') 
+const { successResponse, errorResponse } = require('../../../../shared/utils/response') 
 
 exports.getAllCategories = async (req, res, next) => {
   try {

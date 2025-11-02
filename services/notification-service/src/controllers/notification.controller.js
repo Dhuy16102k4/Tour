@@ -1,5 +1,5 @@
 const Notification = require('../models/Notification.model') 
-const { successResponse, errorResponse } = require('../../../shared/utils/response') 
+const { successResponse, errorResponse } = require('../../../../shared/utils/response') 
 const emailService = require('../services/email.service') 
 const axios = require('axios') 
 
