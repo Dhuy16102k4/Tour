@@ -61,12 +61,13 @@ class AuthController {
   async register(req, res, next) {
     try {
       // FIX BẢO MẬT: Chỉ lấy name, email, password từ body
-      const { name, email, password, phone, address} = req.body
+      const { name, email, password, phone, address, role} = req.body
 
       if (!name || !email || !password) {
         return errorResponse(res, 400, 'Please provide name, email, and password')
       }
-
+      //check roles
+      
       // Check user
       const existingUser = await User.findOne({ email })
       if (existingUser) {
@@ -86,7 +87,7 @@ class AuthController {
         name,
         email,
         password: hashedPassword,
-        role: 'customer',
+        role,
         phone, 
         address
       })
