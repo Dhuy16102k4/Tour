@@ -31,6 +31,10 @@ const tourSchema = new mongoose.Schema({
     required: true,
     min: 1
   },
+  imageCover: [{
+    type: String,
+    require: [true,'Vui lòng cung cấp ảnh bìa']
+  }],
   images: [{
     type: String
   }],
