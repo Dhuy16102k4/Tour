@@ -1,6 +1,7 @@
 const Tour = require('../models/Tour.model')
 const { successResponse, errorResponse } = require('../../../../shared/utils/response')
 
+
 class TourController {
   async getAllTours(req, res, next) {
     try {
@@ -18,13 +19,15 @@ class TourController {
         // query.$text = { $search: search } (Sau khi đã tạo index 'text' cho name, description)
         
         // Code hiện tại của bạn
-        query.$or = [
-          { name: { $regex: search, $options: 'i' } },
-          { description: { $regex: search, $options: 'i' } }
-        ]
+        // query.$or = [
+        //   { name: { $regex: search, $options: 'i' } },
+        //   { description: { $regex: search, $options: 'i' } }
+        // ]
+        query.$text = { $search: search }
       }
 
-      const tours = await Tour.find(query)
+      const tours = await Tour.find(query, search ? { score: { $meta: "textScore" } } : {})
+        .sort(search ? { score: { $meta: "textScore" } } : {}) 
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .populate('category')
@@ -61,8 +64,6 @@ class TourController {
 
   async createTour(req, res, next) {
     try {
-      // GÓP Ý BẢO MẬT: Nên lọc các trường từ req.body
-      // thay vì dùng req.body trực tiếp để tránh Mass Assignment
       const tour = await Tour.create(req.body)
       return successResponse(res, 201, { tour }, 'Tour created successfully')
     } catch (error) {

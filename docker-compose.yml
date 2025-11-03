@@ -70,6 +70,11 @@ services:
       REDIS_URL: redis://redis:6379
       JWT_SECRET: your-super-secret-jwt-key-change-in-production
       JWT_EXPIRES_IN: 7d
+      CLOUDINARY_CLOUD_NAME: davosxueh
+      CLOUDINARY_API_KEY: 528423752487897
+      CLOUDINARY_API_SECRET: c1gz_BXysHm4QDBnUCZShbMMphI
+
+
     depends_on:
       - mongodb
       - redis
@@ -89,6 +94,9 @@ services:
       NODE_ENV: production
       PORT: 3002
       MONGODB_URI: mongodb://mongodb:27017/tour_booking_tours
+      CLOUDINARY_CLOUD_NAME: davosxueh
+      CLOUDINARY_API_KEY: 528423752487897
+      CLOUDINARY_API_SECRET: c1gz_BXysHm4QDBnUCZShbMMphI
     depends_on:
       - mongodb
     networks:
@@ -113,7 +121,6 @@ services:
     depends_on:
       - mongodb
       - tour-service
-      # - payment-service # <-- ĐÃ XÓA để phá vỡ vòng lặp
       - notification-service
     networks:
       - tour_booking_network
