@@ -36,7 +36,6 @@ class UserController {
   async updateProfile(req, res, next) {
     try {
       const userId = req.user.userId
-      // Lọc các trường không cho phép update (ví dụ: role, password)
       const { name, avatar, address, phone } = req.body 
       const updates = { name, avatar, address, phone }
 
@@ -57,6 +56,61 @@ class UserController {
     } catch (error) {
       console.error('Update profile error:', error)
       return errorResponse(res, 500, 'Error updating profile')
+    }
+  }
+  async updateProfile(req, res, next) {
+    try {
+      const userId = req.user.userId
+      // Route này sẽ chỉ cập nhật các trường text
+      const { name, phone, address } = req.body 
+      const updates = { name, phone, address }
+
+      Object.keys(updates).forEach(key => updates[key] === undefined && delete updates[key])
+
+      if (Object.keys(updates).length === 0) {
+        return errorResponse(res, 400, 'No valid fields provided for update')
+      }
+
+      const user = await User.findByIdAndUpdate(userId, updates, {
+        new: true,
+        runValidators: true
+      })
+
+      if (!user) return errorResponse(res, 404, 'User not found')
+
+      user.password = undefined
+      return successResponse(res, 200, { user }, 'Profile updated successfully')
+    } catch (error) {
+      console.error('Update profile error:', error)
+      return errorResponse(res, 500, 'Error updating profile')
+    }
+  }
+
+  // --- UPDATE AVATAR ---
+  async updateAvatar(req, res, next) {
+    try {
+
+      if (!req.body.avatar) {
+        return errorResponse(res, 400, 'Không có file ảnh nào được tải lên')
+      }
+
+      const userId = req.user.userId
+
+      const user = await User.findByIdAndUpdate(
+        userId,
+        { avatar: req.body.avatar }, 
+        { new: true, runValidators: true }
+      )
+      
+      if (!user) return errorResponse(res, 404, 'Không tìm thấy người dùng')
+
+      user.password = undefined
+
+      return successResponse(res, 200, { user }, 'Cập nhật ảnh đại diện thành công')
+
+    } catch (error) {
+      console.error('Update avatar error:', error)
+      return errorResponse(res, 500, 'Lỗi cập nhật ảnh đại diện')
     }
   }
 
