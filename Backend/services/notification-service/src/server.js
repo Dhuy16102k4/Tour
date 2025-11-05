@@ -9,6 +9,7 @@ const notificationRoutes = require('./routes/notification.routes')
 const app = express() 
 const PORT = process.env.PORT || 3005 
 
+
 app.use(helmet()) 
 app.use(cors()) 
 app.use(morgan('dev')) 
@@ -37,7 +38,7 @@ app.use((req, res) => {
 }) 
 
 app.listen(PORT, () => {
-  console.log(`🚀 Notification Service running on port ${PORT}`) 
+  console.log(`Notification Service running on port ${PORT}`) 
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`) 
 }) 
 

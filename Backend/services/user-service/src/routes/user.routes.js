@@ -4,7 +4,7 @@ const userController = require('../controllers/user.controller')
 
 const { verifyToken, restrictTo } = require('../../../../shared/middleware/auth')
 
-const { upload, uploadToCloudinary } = require('../../../shared/middleware/image.middleware')
+const { upload, uploadToCloudinary } = require('../../../../shared/middleware/image.middleware')
 
 
 const processAvatar = async (req, res, next) => {
